@@ -1,6 +1,9 @@
 # YYS-ASSISTANT
 阴阳师辅助脚本，用于MuMu模拟器挂机使用
 
+## 最新 release
+链接: https://pan.baidu.com/s/15S06yhwsoApnOy_CpHLJ-w 提取码: crit    
+
 ### 选择句柄/截图
 先更新句柄，然后再下拉框选择句柄，最后点击截图，如果文件夹获取到的截图正常则可以使用该脚本
 
