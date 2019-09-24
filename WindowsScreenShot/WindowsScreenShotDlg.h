@@ -13,6 +13,7 @@ UINT ThreadYuHun_TWO(LPVOID lpParm);
 UINT ThreadYuHun_THREE(LPVOID lpParm);
 UINT ThreadYuLing(LPVOID lpParm);
 UINT ThreadTuPo(LPVOID lpParm);
+UINT ThreadKillRabbit(LPVOID lpParm);
 class CWindowsScreenShotDlg : public CDialogEx
 {
 // ππ‘Ï
@@ -66,4 +67,5 @@ public:
 	static BOOL CALLBACK EnumWndProc(HWND hwnd, LPARAM lParam);
 	CComboBox hwndList;
 	afx_msg void OnBnClickedButtonTupo();
+	afx_msg void OnBnClickedKillrabbit();
 };

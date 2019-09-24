@@ -19,8 +19,8 @@ CString hwndSelectidName;
 
 extern BOOL m_threadStartOrStop;
 extern int m_windowFlag;
-extern Mat Invite, FightStart_ok, FightStart_no, PrepareAction, Erkounv, Jiaotu, Datianogou, FirstPortrait, Click2Continue, Challenge, FindSuper;
-extern Mat wards, wards2, toFight, flush, VictoryLogo;
+extern Mat Invite, FightStart_ok, FightStart_no, PrepareAction, PrepareAction2, Erkounv, Jiaotu, Datianogou, FirstPortrait, Click2Continue, Challenge, FindSuper;
+extern Mat wards, toFight, flush, VictoryLogo, toFight12;
 Mat cmpArray[] = { FightStart_ok, FightStart_no, PrepareAction, Erkounv, Jiaotu, Datianogou, FirstPortrait, Click2Continue, Invite, Invite };
 /*   0开始战斗黄色  开始战斗灰色    准备    3二口女    椒图   大天狗     6晴明   胜利logo   8邀请*/
 extern LPARAM  FightStartPoint, PrepreActionPoint, RightPoint, FightPassPoint, ChallengePoint;
@@ -90,6 +90,7 @@ BEGIN_MESSAGE_MAP(CWindowsScreenShotDlg, CDialogEx)
 ON_BN_CLICKED(IDC_SUPER_JUEXING, &CWindowsScreenShotDlg::OnBnClickedSuperJuexing)
 ON_BN_CLICKED(IDC_UPDATE_HWNDLIST, &CWindowsScreenShotDlg::OnBnClickedUpdateHwndlist)
 ON_BN_CLICKED(IDC_BUTTON_TUPO, &CWindowsScreenShotDlg::OnBnClickedButtonTupo)
+ON_BN_CLICKED(IDC_KILLRABBIT, &CWindowsScreenShotDlg::OnBnClickedKillrabbit)
 END_MESSAGE_MAP()
 
 
@@ -211,13 +212,13 @@ UINT ThreadYuHun_TWO(LPVOID lpParm)
 			RegionMat = Cwssd.GetRegionMatCut_2(ScreenMat, i);
 			cmpResult[i - 1] = Cwssd.MatCompare(RegionMat, cmpArray[i - 1]);
 		}
-		for (i = 2; i <= 7; i++)
+		 
+		if (cmpResult[0] && ~cmpResult[8])acitonType = 1;
+		if (cmpResult[1] && cmpResult[8])acitonType = 0;
+		for ( i = 2; i <= 7; i++)
 		{
 			if (cmpResult[i])acitonType = i;
 		}
-		if (cmpResult[0] && ~cmpResult[8])acitonType = 1;
-		if (cmpResult[1] && cmpResult[8])acitonType = 0;
-		
 		switch (acitonType)
 		{
 		case 1://返回  开始战斗  框
@@ -313,13 +314,12 @@ UINT ThreadYuHun_THREE(LPVOID lpParm)
 			cmpResult[i - 1] = Cwssd.MatCompare(RegionMat, cmpArray[i - 1]);
 
 		}
+		if (cmpResult[0] && ~cmpResult[9])acitonType = 1;
+		if (cmpResult[1] && cmpResult[9])acitonType = 0;
 		for (int i = 2; i <= 7; i++)
 		{
 			if (cmpResult[i])acitonType = i;
 		}
-		if (cmpResult[0] && ~cmpResult[9])acitonType = 1;
-		if (cmpResult[1] && cmpResult[9])acitonType = 0;
-		
 		switch (acitonType)
 		{
 		case 1://返回  开始战斗  框
@@ -382,7 +382,7 @@ UINT ThreadYuHun_THREE(LPVOID lpParm)
 }
 
 
-UINT ThreadYuLing(LPVOID lpParm)//挑战
+UINT ThreadYuLing(LPVOID lpParm)//御灵
 {
 	HWND pWnd = ::FindWindowW(NULL, hwndSelectidName);
 	if (pWnd == NULL) {
@@ -413,7 +413,7 @@ UINT ThreadYuLing(LPVOID lpParm)//挑战
 			actionType = 3;
 			SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, ChallengePoint);
 			SendMessage(pWnd, WM_LBUTTONUP, NULL, ChallengePoint);
-			Sleep(1000 * 10);
+			Sleep(1000 * 19);
 		}
 		RegionMat = ScreenMat(Rect(166, 254, 60, 60));//晴明
 		if (Cwssd.MatCompare(RegionMat, FirstPortrait))
@@ -457,8 +457,9 @@ UINT ThreadYuLing(LPVOID lpParm)//挑战
 			Sleep(1000*30);*/ //御灵或者业原火时间一般在30秒以上
 			break;
 		default:
-			
-			Sleep(rand() % 1000);
+			SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, FightPassPoint);
+			SendMessage(pWnd, WM_LBUTTONUP, NULL, FightPassPoint);
+			Sleep(rand() % 1500);
 			break;
 		}
 		actionType = 0;
@@ -586,15 +587,14 @@ UINT ThreadTuPo(LPVOID lpParm){//
 	BOOL cmpResult[3] = { FALSE };
 	CWindowsScreenShotDlg Cwssd = new CWindowsScreenShotDlg();
 	Mat ScreenMat, RegionMat;//获得全图	
-	Mat templates[] = { wards, toFight, VictoryLogo, wards2 };
+	Mat templates[] = { wards, toFight, VictoryLogo};
 	bool preStart = false;
 	bool isFightStart = false;
 	bool isFightEnd = false;
 	Rect rect;
 	Rect region = Rect(0,0,763,370);
 	LPARAM clickPoint;
-	int fightCount = 30;
-	while (m_threadStartOrStop && fightCount>0)
+	while (m_threadStartOrStop)
 	{
 		Sleep(1000);
 
@@ -608,17 +608,6 @@ UINT ThreadTuPo(LPVOID lpParm){//
 			preStart = true;
 			Sleep(2000);
 		}
-		ScreenMat = Cwssd.GetRegionMat(pWnd);
-		rect = Cwssd.findTargetPosition(ScreenMat(region), templates[3]);//获得模板匹配方框
-		clickPoint = MAKELPARAM(rect.x + rect.width / 2, rect.y + rect.height / 2);
-		RegionMat = ScreenMat(rect);
-		if (!preStart && Cwssd.MatCompare2(RegionMat, templates[3], 0.2)) {
-			SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, clickPoint);
-			SendMessage(pWnd, WM_LBUTTONUP, NULL, clickPoint);
-			preStart = true;
-			Sleep(2000);
-		}
-
 
 		ScreenMat = Cwssd.GetRegionMat(pWnd);
 		rect = Cwssd.findTargetPosition(ScreenMat(Rect(0, 0, 763, 470)), templates[1]);//获得模板匹配方框
@@ -627,7 +616,6 @@ UINT ThreadTuPo(LPVOID lpParm){//
 		if (preStart && Cwssd.MatCompare2(RegionMat, templates[1], 0.3)) {
 			SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, clickPoint);
 			SendMessage(pWnd, WM_LBUTTONUP, NULL, clickPoint);
-			fightCount++;
 			isFightStart = true;
 			Sleep(2000);
 		}
@@ -636,7 +624,7 @@ UINT ThreadTuPo(LPVOID lpParm){//
 		rect = Cwssd.findTargetPosition(ScreenMat(Rect(0, 0, 763, 470)), templates[2]);//获得模板匹配方框
 		clickPoint = MAKELPARAM(rect.x + rect.width / 2, rect.y + rect.height / 2);
 		RegionMat = ScreenMat(rect);
-		if ( Cwssd.MatCompare2(RegionMat, templates[2], 0.2)) {
+		if ( Cwssd.MatCompare2(RegionMat, templates[2], 0.3)) {
 			SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, clickPoint);
 			SendMessage(pWnd, WM_LBUTTONUP, NULL, clickPoint);
 			preStart = false;
@@ -653,6 +641,58 @@ UINT ThreadTuPo(LPVOID lpParm){//
 	return 0;
 }
 
+UINT ThreadKillRabbit(LPVOID lpParm) {
+	HWND pWnd = ::FindWindowW(NULL, hwndSelectidName);
+	if (pWnd == NULL) {
+		m_threadStartOrStop = 0;
+		AfxMessageBox(_T("句柄不存在"));
+		return 0;
+	}
+	RECT rc;
+	::GetWindowRect(pWnd, &rc);
+	SetWindowPos(pWnd, HWND_BOTTOM, rc.left, rc.top, 830, 556, NULL);
+	BOOL cmpResult[3] = { FALSE };
+	CWindowsScreenShotDlg Cwssd = new CWindowsScreenShotDlg();
+	Mat ScreenMat, RegionMat;//获得全图	
+	Mat templates[] = { toFight12, PrepareAction2, Click2Continue, VictoryLogo };
+	bool preStart = false;
+	bool isFightStart = false;
+	bool isFightEnd = false;
+	Rect rect;
+	Rect region = Rect(0, 0, 763, 370);
+	LPARAM clickPoint;
+	while (m_threadStartOrStop)
+	{
+		Sleep(1000);
+
+		ScreenMat = Cwssd.GetRegionMat(pWnd);
+
+		for (int i = 0; i < 4; i++) {
+			rect = Cwssd.findTargetPosition(ScreenMat, templates[i]);//获得模板匹配方框
+			clickPoint = MAKELPARAM(rect.x + rect.width / 2, rect.y + rect.height / 2);
+			RegionMat = ScreenMat(rect);
+
+			if (Cwssd.MatCompare2(RegionMat, templates[i], 0.3)) {
+				SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, clickPoint);
+				SendMessage(pWnd, WM_LBUTTONUP, NULL, clickPoint);
+				preStart = true;
+				Sleep(2000);
+			}
+		}
+			
+
+
+	}
+	delete Cwssd;
+	RegionMat.release();
+	ScreenMat.release();
+	EmptyWorkingSet(GetCurrentProcess());
+	return 0;
+}
+
+
+
+
 /*
 	screenPic 当前屏幕截图
 	templatePic 模板图片
@@ -668,7 +708,7 @@ Rect CWindowsScreenShotDlg::findTargetPosition(Mat screenPic, Mat templatePic) {
 	Point minLoc, maxLoc;
 	minMaxLoc(result, &minValue, &maxValue, &minLoc, &maxLoc);
 	rectangle(screenPic, maxLoc, Point(maxLoc.x + templatePic.cols, maxLoc.y + templatePic.rows), Scalar(0, 255, 0), 2, 8);
-	//imwrite("识别结果.jpg", screenPic);//保存匹配结果用于调试
+//	imwrite("识别结果.jpg", screenPic);//保存匹配结果用于调试
 
 	result.release();
 	//返回 模板匹配到的原图中所在的位置
@@ -1108,6 +1148,7 @@ void CWindowsScreenShotDlg::OnBnClickedStopall()
 	GetDlgItem(IDC_YULING)->EnableWindow(TRUE);
 	GetDlgItem(IDC_SUPER_JUEXING)->EnableWindow(TRUE);
 	GetDlgItem(IDC_BUTTON_TUPO)->EnableWindow(TRUE);
+	GetDlgItem(IDC_KILLRABBIT)->EnableWindow(TRUE);
 	SetDlgItemText(IDC_YYSSTATE, _T("停止"));
 	m_threadStartOrStop = FALSE;
 }
@@ -1365,4 +1406,20 @@ void CWindowsScreenShotDlg::OnBnClickedButtonTupo()
 	SetDlgItemText(IDC_YYSSTATE, _T("突破"));
 	m_threadStartOrStop = 1;
 	AfxBeginThread(ThreadTuPo, 0);
+}
+
+
+void CWindowsScreenShotDlg::OnBnClickedKillrabbit()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	int index = ((CComboBox*)GetDlgItem(IDC_HWND_LIST))->GetCurSel();
+	((CComboBox*)GetDlgItem(IDC_HWND_LIST))->GetLBText(index, hwndSelectidName);
+	GetDlgItem(IDC_TRIHUN)->EnableWindow(FALSE);
+	GetDlgItem(IDC_DOUHUN)->EnableWindow(FALSE);
+	GetDlgItem(IDC_YULING)->EnableWindow(FALSE);
+	GetDlgItem(IDC_SUPER_JUEXING)->EnableWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_TUPO)->EnableWindow(FALSE);
+	SetDlgItemText(IDC_YYSSTATE, _T("刷石头"));
+	m_threadStartOrStop = 1;
+	AfxBeginThread(ThreadKillRabbit, 0);
 }

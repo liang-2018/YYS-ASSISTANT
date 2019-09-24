@@ -65,13 +65,16 @@
     <Image Include="res\WindowsScreenShot.ico">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\x64\Debug\已截取\开始战斗.jpg">
+    <Image Include="开始战斗_ok.jpg">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\x64\Debug\已截取\邀请1.jpg">
+    <Image Include="开始战斗_no.jpg">
       <Filter>资源文件</Filter>
     </Image>
-    <Image Include="..\x64\Debug\已截取\邀请2.jpg">
+    <Image Include="YYS_LOGO.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="点击屏幕继续.jpg">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

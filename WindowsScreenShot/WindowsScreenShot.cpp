@@ -72,7 +72,7 @@ BOOL CWindowsScreenShotApp::InitInstance()
 
 	//AfxMessageBox(_T("      欢迎加群：437027234  \n一起聆听基King和北Gay的激情故事 "));
 
-	CTime t(2019, 5, 15, 0, 0, 0);
+	CTime t(2119, 5, 15, 0, 0, 0);
 	if (CTime::GetCurrentTime() > t)
 	{
 		AfxMessageBox(_T("版本过期，请加群437027234向会长发嘤嘤嘤！"));
