@@ -19,9 +19,9 @@ CString hwndSelectidName;
 
 extern BOOL m_threadStartOrStop;
 extern int m_windowFlag;
-extern Mat Invite, FightStart_ok, FightStart_no, PrepareAction, PrepareAction2, Erkounv, Jiaotu, Datianogou, FirstPortrait, Click2Continue, Challenge, FindSuper;
-extern Mat wards, toFight, flush, VictoryLogo, toFight12;
-Mat cmpArray[] = { FightStart_ok, FightStart_no, PrepareAction, Erkounv, Jiaotu, Datianogou, FirstPortrait, Click2Continue, Invite, Invite };
+extern Mat invite, invite2, fightStart_ok, fightStart_no, prepareAction, prepareAction2, Erkounv, Jiaotu, Datianogou, firstPortrait, click2Continue, challenge, findSuper;
+extern Mat wards, toFight, flush, victoryLogo, toFight12;
+Mat cmpArray[] = { fightStart_ok, fightStart_no, prepareAction, Erkounv, Jiaotu, Datianogou, firstPortrait, click2Continue, invite, invite2 };
 /*   0开始战斗黄色  开始战斗灰色    准备    3二口女    椒图   大天狗     6晴明   胜利logo   8邀请*/
 extern LPARAM  FightStartPoint, PrepreActionPoint, RightPoint, FightPassPoint, ChallengePoint;
 
@@ -407,7 +407,7 @@ UINT ThreadYuLing(LPVOID lpParm)//御灵
 
 		RegionMat = ScreenMat(Rect(570,335,100,50));//挑战
 		//imwrite("./挑战1.jpg", RegionMat);
-		if (Cwssd.MatCompare(RegionMat, Challenge))
+		if (Cwssd.MatCompare(RegionMat, challenge))
 		{
 			//AfxMessageBox(_T("检测到了检测到了！！！"));
 			actionType = 3;
@@ -416,13 +416,13 @@ UINT ThreadYuLing(LPVOID lpParm)//御灵
 			Sleep(1000 * 19);
 		}
 		RegionMat = ScreenMat(Rect(166, 254, 60, 60));//晴明
-		if (Cwssd.MatCompare(RegionMat, FirstPortrait))
+		if (Cwssd.MatCompare(RegionMat, firstPortrait))
 		{
 			actionType = 1;
 		}
 		RegionMat = ScreenMat(Rect(360, 470, 115, 30));//点击屏幕继续
 		//imwrite("./点击屏幕继续.jpg",RegionMat);
-		if (Cwssd.MatCompare(RegionMat, VictoryLogo))
+		if (Cwssd.MatCompare(RegionMat, victoryLogo))
 		{
 			actionType = 2;
 		}
@@ -495,24 +495,24 @@ UINT ThreadsSuperJuexing(LPVOID lpParm)//超鬼王觉醒
 
 		RegionMat = ScreenMat(Rect(570, 335, 100, 50));//挑战
 		//imwrite("./挑战1.jpg", RegionMat);
-		if (Cwssd.MatCompare(RegionMat, Challenge))
+		if (Cwssd.MatCompare(RegionMat, challenge))
 		{
 			//AfxMessageBox(_T("检测到了检测到了！！！"));
 			actionType = 3;
 		}
 		RegionMat = ScreenMat(Rect(166, 254, 60, 60));//晴明
-		if (Cwssd.MatCompare(RegionMat, FirstPortrait))
+		if (Cwssd.MatCompare(RegionMat, firstPortrait))
 		{
 			actionType = 1;
 		}
 		RegionMat = ScreenMat(Rect(360, 470, 115, 30));//点击屏幕继续
 		//imwrite("./点击屏幕继续.jpg",RegionMat);
-		if (Cwssd.MatCompare(RegionMat, VictoryLogo))
+		if (Cwssd.MatCompare(RegionMat, victoryLogo))
 		{
 			actionType = 2;
 		}
 		RegionMat = ScreenMat(Rect(1, 188, 50, 50));//发现超鬼王
-		if (Cwssd.MatCompare(RegionMat, FindSuper))
+		if (Cwssd.MatCompare(RegionMat, findSuper))
 		{
 			actionType = 4;
 		}
@@ -587,7 +587,7 @@ UINT ThreadTuPo(LPVOID lpParm){//
 	BOOL cmpResult[3] = { FALSE };
 	CWindowsScreenShotDlg Cwssd = new CWindowsScreenShotDlg();
 	Mat ScreenMat, RegionMat;//获得全图	
-	Mat templates[] = { wards, toFight, VictoryLogo};
+	Mat templates[] = { wards, toFight, victoryLogo};
 	bool preStart = false;
 	bool isFightStart = false;
 	bool isFightEnd = false;
@@ -654,7 +654,7 @@ UINT ThreadKillRabbit(LPVOID lpParm) {
 	BOOL cmpResult[3] = { FALSE };
 	CWindowsScreenShotDlg Cwssd = new CWindowsScreenShotDlg();
 	Mat ScreenMat, RegionMat;//获得全图	
-	Mat templates[] = { toFight12, PrepareAction2, Click2Continue, VictoryLogo };
+	Mat templates[] = { toFight12, prepareAction2, click2Continue, victoryLogo };
 	bool preStart = false;
 	bool isFightStart = false;
 	bool isFightEnd = false;
@@ -892,10 +892,10 @@ Mat CWindowsScreenShotDlg::GetRegionMatCut(Mat screenPic, int type)
 	switch (type)
 	{
 	case 1://返回  开始战斗  框
-		rect = Rect(614, 402, 125, 50);
+		rect = Rect(758, 418, 64, 64);
 		break;
 	case 2://返回  开始战斗  框
-		rect = Rect(614, 402, 125, 50);
+		rect = Rect(758, 418, 64, 64);
 		break;
 	case 3://准备
 		rect = Rect(720, 370, 75, 45);
@@ -919,10 +919,10 @@ Mat CWindowsScreenShotDlg::GetRegionMatCut(Mat screenPic, int type)
 		rect = Rect(360, 470, 115, 30);
 		break;
 	case 9://邀请1
-		rect = Rect(432, 318, 62, 62);
+		rect = Rect(385, 169, 64, 64);
 		break;		
 	case 10://邀请2
-		rect = Rect(651, 318, 62, 62);
+		rect = Rect(674, 168, 64, 64);
 		break;		
 	default:
 		break;
@@ -939,10 +939,10 @@ Mat CWindowsScreenShotDlg::GetRegionMatCut_2(Mat screenPic, int type)
 	switch (type)
 	{
 	case 1://返回  开始战斗  框
-		rect = Rect(614, 402, 125, 50);
+		rect = Rect(758, 418, 64, 64);
 		break;
 	case 2://返回  开始战斗  框
-		rect = Rect(614, 402, 125, 50);
+		rect = Rect(758, 418, 64, 64);
 		break;
 	case 3://准备
 		rect = Rect(720, 370, 75, 45);
@@ -966,10 +966,10 @@ Mat CWindowsScreenShotDlg::GetRegionMatCut_2(Mat screenPic, int type)
 		rect = Rect(360, 470, 115, 30);
 		break;
 	case 9://邀请1
-		rect = Rect(432, 318, 62, 62);
+		rect = Rect(385, 169, 64, 64);
 		break;
 	case 10://邀请2
-		rect = Rect(651, 318, 62, 62);
+		rect = Rect(674, 168, 64, 64);
 		break;
 	default:
 		break;
@@ -1198,171 +1198,7 @@ void CWindowsScreenShotDlg::OnBnClickedSuperJuexing()
 }
 
 
-
-
-//void CWindowsScreenShotDlg::OnBnClickedOpenglTest()
-//{
-//	 opengl截图
-//	HWND pWnd = ::FindWindowW(NULL, _T("阴阳师-网易游戏"));
-//	HWND pWnd = ::FindWindowW(NULL, _T("夜神模拟器"));
-//	HDC hdc = ::GetDC(pWnd);
-//	RECT rc;
-//	::GetWindowRect(pWnd, &rc);
-//	unsigned char* screenShotBuf;
-//	int width = rc.right - rc.left;
-//	int height = rc.bottom - rc.top;
-//	GLubyte* BMP_Header[54];
-//	GLint i, j;
-//	GLint PixelDataLength;
-//	FILE* pDummyFile=fopen("bitmap1.bmp","rb");
-//	FILE* pWritingFile=fopen("grab.bmp","wb");
-//	GLubyte* pPixelData;
-//	/*unsigned char header[54] = { 0x42, 0x4d, 0, 0, 0, 0, 0, 0, 0, 0,
-//		54, 0, 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 32, 0,
-//		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-//		0, 0, 0, 0
-//	};
-//	long file_size = (long)width * (long)height * 4 + 54;
-//	header[2] = (unsigned char)(file_size & 0x000000ff);
-//	header[3] = (file_size >> 8) & 0x000000ff;
-//	header[4] = (file_size >> 16) & 0x000000ff;
-//	header[5] = (file_size >> 24) & 0x000000ff;
-//	header[18] = width & 0x000000ff;
-//	header[19] = (width >> 8) & 0x000000ff;
-//	header[20] = (width >> 16) & 0x000000ff;
-//	header[21] = (width >> 24) & 0x000000ff;
-//	header[22] = height & 0x000000ff;
-//	header[23] = (height >> 8) & 0x000000ff;
-//	header[24] = (height >> 16) & 0x000000ff;
-//	header[25] = (height >> 24) & 0x000000ff;
-//	char fname_bmp[128];*/
-//
-//
-//	i = width * 3;
-//	while (i % 4 != 0)++i;
-//
-//
-//	PixelDataLength = i*height;
-//	pPixelData = (GLubyte*)malloc(PixelDataLength);
-//	if (0 == pPixelData)exit(0);
-//
-//
-//	
-//	HGLRC context = wglCreateContext(hdc);
-//	if (NULL != hdc){
-//		wglMakeCurrent(hdc, context);
-//		screenShotBuf = new unsigned char[4 * width*height];
-//		glPixelStorei(GL_UNPACK_ALIGNMENT,4);
-//		glReadPixels(200,200,width,height,GL_RGBA,GL_UNSIGNED_BYTE,screenShotBuf);
-//
-//
-//		/*fwrite(header, sizeof(unsigned char), (size_t)(long)width*height * 4, pWritingFile);
-//		fwrite(pPixelData, sizeof(unsigned char), (size_t)(long)width*height * 4, pWritingFile);*/
-//
-//		fread(BMP_Header,sizeof(BMP_Header),1,pDummyFile);
-//		fwrite(BMP_Header,sizeof(BMP_Header),1,pWritingFile);
-//		i = width;
-//		j = height;
-//		fwrite(&i, sizeof(i), 1, pWritingFile);
-//		fwrite(&j, sizeof(j), 1, pWritingFile);
-//		fseek(pWritingFile,0,SEEK_END);
-//		fwrite(pPixelData,PixelDataLength,1,pWritingFile);
-//		
-//
-//	}
-//	fclose(pDummyFile);
-//	fclose(pWritingFile);
-//	free(pPixelData);
-//
-//}
-//void CWindowsScreenShotDlg::OnBnClickedAltPrtscr(){
-//	AfxBeginThread(ThreadAltScreen, 0);
-//
-//}
-
-//void CWindowsScreenShotDlg::AltPrtscr(HWND hWnd, LPCTSTR lpszPath)
-//{
-//	HWND hDesktop = ::GetDesktopWindow();
-//	ASSERT(hDesktop);
-//	if (NULL == hWnd)
-//	{
-//		hWnd = hDesktop;
-//	}
-//	RECT rect;
-//	::GetWindowRect(hWnd, &rect);
-//
-//	int nWidht = rect.right - rect.left;
-//	int nHeight = rect.bottom - rect.top;
-//
-//	HDC hSrcDC = ::GetWindowDC(hWnd);
-//	ASSERT(hSrcDC);
-//	HDC hMemDC = ::CreateCompatibleDC(hSrcDC);
-//	ASSERT(hMemDC);
-//	HBITMAP hBitmap = ::CreateCompatibleBitmap(hSrcDC, nWidht, nHeight);
-//	ASSERT(hBitmap);
-//	HBITMAP hOldBitmap = (HBITMAP)::SelectObject(hMemDC, hBitmap);
-//	::BitBlt(hMemDC, 0, 0, nWidht, nHeight, hSrcDC, 0, 0, SRCCOPY);
-//	
-//	BITMAP bitmap = { 0 };
-//	::GetObject(hBitmap, sizeof(BITMAP), &bitmap);
-//	BITMAPINFOHEADER bi = { 0 };
-//	BITMAPFILEHEADER bf = { 0 };
-//
-//	CONST int nBitCount = 24;
-//	bi.biSize = sizeof(BITMAPINFOHEADER);
-//	bi.biWidth = bitmap.bmWidth;
-//	bi.biHeight = bitmap.bmHeight;
-//	bi.biPlanes = 1;
-//	bi.biBitCount = nBitCount;
-//	bi.biCompression = BI_RGB;
-//	DWORD dwSize = ((bitmap.bmWidth * nBitCount + 31) / 32) * 4 * bitmap.bmHeight;
-//
-//	HANDLE hDib = GlobalAlloc(GHND, dwSize + sizeof(BITMAPINFOHEADER));
-//	LPBITMAPINFOHEADER lpbi = (LPBITMAPINFOHEADER)GlobalLock(hDib);
-//	*lpbi = bi;
-//
-//	//::GetDIBits(hMemDC, hBitmap, 0, bitmap.bmHeight, (BYTE*)lpbi + sizeof(BITMAPINFOHEADER), (BITMAPINFO*)lpbi, DIB_RGB_COLORS);
-//	::glReadPixels(0, 0,(GLint)nWidht, (GLint)nHeight, GL_RGBA, GL_UNSIGNED_BYTE, &bitmap.bmBitsPixel);
-//
-//	int depth = (bitmap.bmBitsPixel == 1) ? IPL_DEPTH_1U : IPL_DEPTH_8U;
-//	int nChannels = (bitmap.bmBitsPixel == 1) ? 1 : bitmap.bmBitsPixel / 8;
-//	IplImage* img = cvCreateImage(cvSize(bitmap.bmWidth, bitmap.bmHeight), depth, nChannels);
-//	BYTE *pBuffer = new BYTE[bitmap.bmHeight*bitmap.bmWidth*nChannels];
-//	GetBitmapBits(hBitmap, bitmap.bmHeight*bitmap.bmWidth*nChannels, pBuffer);
-//	memcpy(img->imageData, pBuffer, bitmap.bmHeight*bitmap.bmWidth*nChannels);
-//	delete[]pBuffer;
-//	IplImage *dst = cvCreateImage(cvGetSize(img), img->depth, 3);
-//	cvCvtColor(img, dst, CV_BGRA2BGR);
-//	cvReleaseImage(&img);
-//
-//	Mat bitmap_mat = Mat(dst);
-//	imwrite(".//matxxx.jpg", bitmap_mat);
-//	bitmap_mat.release();
-//
-//	GlobalUnlock(hDib);
-//	GlobalFree(hDib);
-//
-//	::SelectObject(hMemDC, hOldBitmap);
-//	::DeleteObject(hBitmap);
-//	::DeleteDC(hMemDC);
-//	::ReleaseDC(hWnd, hSrcDC);
-//
-//}
-//UINT ThreadAltScreen(LPVOID lpParm){
-//
-//
-//	HWND hWnd = ::FindWindowW(NULL, _T("阴阳师 - MuMu模拟器"));
-//	SendMessage(hWnd, WM_KEYDOWN, VK_MENU, 0x000f0001);
-//	SendMessage(hWnd, WM_KEYDOWN, VK_SNAPSHOT, 0x000f0001);
-//	Sleep(100);
-//	SendMessage(hWnd, WM_KEYUP, VK_SNAPSHOT, 0x000f0001);
-//	SendMessage(hWnd, WM_KEYUP, VK_MENU, 0x000f0001);
-//	return 0;
-//}
-
-
-
-
+// 更新句柄列表
 void CWindowsScreenShotDlg::OnBnClickedUpdateHwndlist()
 {	
 	((CComboBox*)GetDlgItem(IDC_HWND_LIST))->ResetContent();
@@ -1377,7 +1213,7 @@ void CWindowsScreenShotDlg::OnBnClickedUpdateHwndlist()
 	}
 	UpdateData(TRUE);
 }
-
+// 枚举句柄窗口
 BOOL CALLBACK CWindowsScreenShotDlg::EnumWndProc(HWND hwnd, LPARAM lParam) {
 	BOOL bRet = TRUE;
 	if (::IsWindowVisible(hwnd))
