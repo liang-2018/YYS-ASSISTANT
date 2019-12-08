@@ -1,5 +1,7 @@
 .vs/
+Debug/
 x64/Debug/
 WindowsScreenShot/x64/
 *.pdb
 *.ilk
+*.sdf

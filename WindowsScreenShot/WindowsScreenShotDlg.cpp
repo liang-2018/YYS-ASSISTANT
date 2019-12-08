@@ -405,14 +405,14 @@ UINT ThreadYuLing(LPVOID lpParm)//御灵
 		Sleep(200);
 		ScreenMat = Cwssd.GetRegionMat(pWnd);
 
-		RegionMat = ScreenMat(Rect(570,335,100,50));//挑战
+		RegionMat = ScreenMat(Rect(702,401,96,96));//挑战
 		//imwrite("./挑战1.jpg", RegionMat);
 		if (Cwssd.MatCompare(RegionMat, challenge))
 		{
 			//AfxMessageBox(_T("检测到了检测到了！！！"));
 			actionType = 3;
-			SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, ChallengePoint);
-			SendMessage(pWnd, WM_LBUTTONUP, NULL, ChallengePoint);
+			SendMessage(pWnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(750, 450));
+			SendMessage(pWnd, WM_LBUTTONUP, NULL, MAKELPARAM(750, 450));
 			Sleep(1000 * 19);
 		}
 		RegionMat = ScreenMat(Rect(166, 254, 60, 60));//晴明
