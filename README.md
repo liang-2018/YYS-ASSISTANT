@@ -1,6 +1,10 @@
 # YYS-ASSISTANT
 阴阳师辅助脚本，用于MuMu模拟器挂机使用
 
+# 弃游了，没特殊情况不会更新
+# 哪天心情好了就更新
+# 牛掰的自己写去，反正又不难
+
 ## 最新 release
 链接: https://pan.baidu.com/s/15S06yhwsoApnOy_CpHLJ-w 提取码: crit    
 
